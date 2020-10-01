@@ -23,6 +23,7 @@ justify-content: space-between;
     width: 176px;
     height: 69px;
     background-position: 0 0;
+    text-indent: -99999px;
 }
 .headerLinks {
     display:flex;

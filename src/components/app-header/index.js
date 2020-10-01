@@ -24,7 +24,7 @@ export default memo(function DAppHeader() {
             <div className={"content wrap-v1"}>
                 <HeaderLeft>
                     <a href="#/" className="logo sprite_01">
-                        <div></div>
+                        网易云音乐
                     </a>
                     <div className={"headerLinks"}>
                         {
