@@ -2,13 +2,13 @@ import * as actionTypes from './constants'
 
 
 const defaultState = {
-    topBanner: []
+    topBanners: []
 }
 
 function reducer(state = defaultState, action) {
     switch (action.type) {
         case actionTypes.CHANGE_TOP_BANNERS:
-           return {...state, topBanner: action.topBanner}
+           return {...state, topBanners: action.topBanner}
         default:
             return state
     }

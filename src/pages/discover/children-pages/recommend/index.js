@@ -10,7 +10,7 @@ function DRecommend(props) {
   }, [getBanners])
   return (
     <div>
-      <h2>DRecommend</h2>
+      <h2>DRecommend:{topBanners.length}</h2>
     </div>
   )
 }
