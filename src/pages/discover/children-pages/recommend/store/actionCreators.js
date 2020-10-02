@@ -4,7 +4,7 @@ import { getTopBanner } from '@/services/getTopBanner'
 
 const changeTopBannerAction = (res) => ({
     type: actionTypes.CHANGE_TOP_BANNERS,
-    topBanner: res.banners
+    topBanners: res.banners
 })
 
 export const getTopBannerAction = () => {
