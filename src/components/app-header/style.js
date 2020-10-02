@@ -37,6 +37,9 @@ justify-content: space-between;
     font-size:14px;
     color: #ffffff;
 } 
+.active {
+        background-color: #000;
+    }
 .active .icon{
         display: block;
         position: absolute;
@@ -49,7 +52,6 @@ justify-content: space-between;
         background-image: url(${require('@/assets/img/sprite_01.png')});
         background-position: -226px 0;
         }
-
 a:last-child::after {
     display: block;
     content: '';
@@ -63,7 +65,7 @@ a:last-child::after {
 }
 .linkItem:hover {
     text-decoration:none;
-    background-color: #000000;
+    background-color: #000;
 }
 `
 
