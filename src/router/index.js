@@ -25,8 +25,14 @@ const routes = [
         component: DDiscover,
         routes: [
             {
-                path: "/discover/recommend",
+                path: "/discover",
                 exact: true,
+                render: () => (
+                    <Redirect to="/discover/recommend" />
+                )
+            },
+            {
+                path: "/discover/recommend",
                 component: DRecommend
             },
             {

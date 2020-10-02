@@ -10,7 +10,7 @@ export default memo(function DAppHeader() {
     const showSelectItem = (item, index) => {
         if (index < 3) {
             return (
-                <NavLink to={item.link} key={item.title} className="linkItem" exact>{item.title}
+                <NavLink to={item.link} key={item.title} className="linkItem">{item.title}
                     <i className="icon"></i>
                 </NavLink>)
         } else {
