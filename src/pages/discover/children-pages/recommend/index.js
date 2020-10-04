@@ -1,6 +1,11 @@
-import React, { memo} from 'react'
+import React, { memo } from 'react'
 
-import {DRecommendWraper} from './style'
+import {
+  DRecommendWraper,
+  DContent,
+  DRecommendLeft,
+  DRecommendRight
+} from './style'
 import TopBanner from '../recommend/children-components/top-banner'
 
 function DRecommend(props) {
@@ -8,6 +13,10 @@ function DRecommend(props) {
     <DRecommendWraper>
       <TopBanner>
       </TopBanner>
+      <DContent className='wrap-v2'>
+        <DRecommendLeft></DRecommendLeft>
+        <DRecommendRight></DRecommendRight>
+      </DContent>
     </DRecommendWraper>
   )
 }
