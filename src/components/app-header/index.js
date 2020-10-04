@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+import { NavLink } from 'react-router-dom'
 import { HeaderWrapper, HeaderLeft, HeaderRight } from './style'
 import { headerLinks } from '@/common/local-data'
 import { SearchOutlined } from '@ant-design/icons'

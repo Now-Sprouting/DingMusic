@@ -5,14 +5,12 @@ export const DTopBannerWrapper = styled.div`
 
     .banner {
     height: 270px;
-    background-color: red;
     display: flex;
     position: relative;
   }
 ` 
 export const DBannerLeft = styled.div`
     width: 730px;
-    background-color: pink;
     .ant-carousel .slick-dots li.slick-active button {
         background-color: #c20c0c;
     }

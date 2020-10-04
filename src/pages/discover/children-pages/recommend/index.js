@@ -6,15 +6,25 @@ import {
   DRecommendLeft,
   DRecommendRight
 } from './style'
-import TopBanner from '../recommend/children-components/top-banner'
+import DTopBanner from '../recommend/children-components/top-banner'
+import DHotRecommed from '../recommend/children-components/hot-recommend'
+import DNewAlbum from '../recommend/children-components/new-album'
+import DRecommendRanking from '../recommend/children-components/recommend-ranking'
 
 function DRecommend(props) {
   return (
     <DRecommendWraper>
-      <TopBanner>
-      </TopBanner>
+      <DTopBanner>
+      </DTopBanner>
       <DContent className='wrap-v2'>
-        <DRecommendLeft></DRecommendLeft>
+        <DRecommendLeft>
+          <DHotRecommed>
+          </DHotRecommed>
+          <DNewAlbum>
+          </DNewAlbum>
+          <DRecommendRanking>
+          </DRecommendRanking>
+        </DRecommendLeft>
         <DRecommendRight></DRecommendRight>
       </DContent>
     </DRecommendWraper>

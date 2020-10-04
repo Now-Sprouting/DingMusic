@@ -5,7 +5,7 @@ import { getTopBannerAction } from '@/pages/discover/children-pages/recommend/st
 
 import { Carousel } from 'antd'
 import { DTopBannerWrapper, DBannerLeft, DBannerRight, DBannerControl } from './style'
-export default memo(function TopBanner() {
+export default memo(function DTopBanner() {
     // *源码中 useSelector 中 返回的对象进行的比较方式是 === 比较:这就意味着每次其他组件数据发生变化的时候本组件都会重新加载,所以会造成性能上的损耗
     // *解决方法: useSelector 传入第二个参数 shallowEqual
 
