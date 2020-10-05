@@ -32,8 +32,8 @@ export const getHotRecommendAction = (limit) => {
 
 export const changeNewAlbumAction = (res) => ({
     type: actionTypes.CHNAGE_NEW_ALBUM,
-    newAlbum: res.monthData
-}) 
+    newAlbum: res.albums
+})
 export const getNewAlbumAction = (limit) => {
     return dispatch => {
         getNewAlbum(limit).then(res => {
