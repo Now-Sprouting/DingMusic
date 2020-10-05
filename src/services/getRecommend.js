@@ -14,3 +14,12 @@ export const getHotRecommend = (limit) => {
         }
     })
 }
+
+export const getNewAlbum = (limit) => {
+    return request({
+        url: '/top/album',
+        params: {
+            limit
+        }
+    })
+}

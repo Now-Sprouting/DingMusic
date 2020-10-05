@@ -37,8 +37,14 @@ export default memo(function DTopBanner() {
         <DTopBannerWrapper bgImage={bgImage}>
             <div className={'banner wrap-v2'}>
                 <DBannerLeft>
-                    <Carousel effect="fade" autoplay dotPosition='bottom' beforeChange={bannerChange}
-                        ref={CarouselRef} autoplaySpeed={4000}>
+                    <Carousel 
+                    effect="fade"
+                    speed={2000}
+                    autoplay 
+                    dotPosition='bottom'
+                    beforeChange={bannerChange}
+                    ref={CarouselRef} 
+                    autoplaySpeed={3000}>
                         {
                             topBanners.map((item, index) => {
                                 return (
