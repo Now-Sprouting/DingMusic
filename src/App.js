@@ -9,6 +9,7 @@ import store from '@/store'
 // *组件的引入
 import DAppHeader from '@/components/app-header'
 import DAppFooter from '@/components/app-footer'
+import DPlayerBar from '@/pages/player/player-bar'
 
 export default memo(function App() {
     return (
@@ -18,6 +19,7 @@ export default memo(function App() {
                     <DAppHeader />
                     {renderRoutes(routes)}
                     <DAppFooter />
+                    <DPlayerBar />
                 </div>
             </HashRouter>
         </Provider>
