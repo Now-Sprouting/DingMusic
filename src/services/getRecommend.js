@@ -23,3 +23,12 @@ export const getNewAlbum = (limit) => {
         }
     })
 }
+
+export const getTopRanking = (idx) => {
+    return request({
+        url: '/top/list',
+        params: {
+            idx
+        }
+    })
+}

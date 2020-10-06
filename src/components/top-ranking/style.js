@@ -88,7 +88,9 @@ export const DTopRankingWrapper = styled.div`
                             text-overflow: ellipsis;
                         }
                     }
+                    width: 170px;
                     display: flex;
+                    overflow: hidden;
                     .text {
                         height: 32px;
                         color: #000;
