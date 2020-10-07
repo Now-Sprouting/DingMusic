@@ -9,6 +9,7 @@ import DArtist from "../pages/discover/children-pages/artist";
 import DAlbum from "../pages/discover/children-pages/album";
 import DMine from '@/pages/mine'
 import DFriend from '@/pages/friend'
+import DPlayer from '@/pages/player'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
 
 
@@ -55,6 +56,9 @@ const routes = [
             {
                 path: "/discover/album",
                 component: DAlbum
+            },{
+                path: "/discover/player",
+                component: DPlayer
             }
         ]
     },

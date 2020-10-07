@@ -7,54 +7,53 @@ import { formatDate } from '@/utils/format-utils'
 import { Slider } from 'antd'
 import { DPlayerBarWrapper } from './style'
 import { changeImgSize, getPlaySong } from '../../../utils/format-utils'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default memo(function DPlayerBar() {
+    // *redux hook
     const { currentSong } = useSelector(state => ({
         currentSong: state.getIn(['player', 'currentSong'])
     }), shallowEqual)
     const dispatch = useDispatch()
 
+    // *react hook
+    const audioRef = useRef()
     const [currentTime, setCurrentTime] = useState(0)
     const [progress, setProgress] = useState(0)
     const [sliderIsChange, setSliderIsChange] = useState(false)
+    const [isPlaying, setisPlaying] = useState(false)
     useEffect(() => {
         dispatch(getSongDetailAction(28996919))
     }, [dispatch])
-    const audioRef = useRef()
+    useEffect(() => {
+        audioRef.current.src = getPlaySong(currentSong.id)
+    }, [currentSong])
 
 
+    // *constant
     const singer = (currentSong.ar && currentSong.ar[0].name) || '未知'
     const img = changeImgSize(((currentSong.al && currentSong.al.picUrl) || ''), 34)
     const duration = currentSong.dt || 0;
     const totaltime = formatDate(currentSong.dt, 'mm:ss')
     const showCurrentTime = formatDate(currentTime, 'mm:ss')
 
-
-    const playSong = () => {
-        audioRef.current.src = getPlaySong(currentSong.id)
-        audioRef.current.play();
-    }
+    // *handle
+    const playSong = useCallback(() => {
+        setisPlaying(!isPlaying);
+        isPlaying ? audioRef.current.pause() : audioRef.current.play()
+    }, [isPlaying])
     const timeUpdate = (e) => {
         const currentTime = e.target.currentTime;
         if (!sliderIsChange) {
             setCurrentTime(currentTime * 1000);
             setProgress(currentTime * 1000 / duration * 100);
         }
-        // if (!sliderIsChange) {
-        //     const currentTime = e.target.currentTime;
-        //     setCurrentTime(currentTime * 1000);
-        // }
     }
     const sliderChange = useCallback((value) => {
         setSliderIsChange(true);
         const currentTime = value / 100 * duration;
         setCurrentTime(currentTime);
-        setProgress(value);     
-        // console.log(value);
-        // setSliderIsChange(true)
-        // if (sliderIsChange) {
-        //     setCurrentTime(value)
-        // }
+        setProgress(value);
 
     }, [duration])
     const sliderAfterChange = useCallback((value) => {
@@ -62,23 +61,24 @@ export default memo(function DPlayerBar() {
         audioRef.current.currentTime = currentTime;
         setCurrentTime(currentTime * 1000);
         setSliderIsChange(false);
-        // console.log(value);
-        // audioRef.current.currentTime = value / 1000
-        // setCurrentTime(value)
-        // setSliderIsChange(false)
-
-
-    }, [duration])
+        if (!isPlaying) {
+            playSong();
+        }
+    }, [duration, isPlaying, playSong])
     return (
-        <DPlayerBarWrapper>
+        <DPlayerBarWrapper isplaying={isPlaying} >
             <div className='player-bar-main sprite_player-bar'>
                 <div className='player-bar-content'>
                     <div className='content-btns'>
                         <div className='btns-pre sprite_player-bar btns-total'></div>
-                        <div className='btns-middle sprite_player-bar btns-total' onClick={e => { playSong() }}></div>
+                        <div className='btns-middle sprite_player-bar btns-total'
+                            onClick={e => { playSong() }}>
+                        </div>
                         <div className='btns-next sprite_player-bar btns-total'></div>
                     </div>
-                    <img src={img} alt='' className='content-head'></img>
+                    <NavLink to='/discover/player'>
+                        <img src={img} alt='' className='content-head'></img>
+                    </NavLink>
                     <div className='content-play'>
                         <div className='play-top'>
                             <a href="javacript" className='top-title'>{currentSong.name}</a>

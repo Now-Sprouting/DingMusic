@@ -42,9 +42,9 @@ export const DPlayerBarWrapper = styled.div`
                 .btns-middle {
                     width: 36px;
                     height: 36px;
-                    background-position: 0 -204px;
+                    background-position: 0 ${prpos => prpos.isplaying ? '-165px' : '-204px'};
                     &:hover {
-                        background-position: -40px -204px;
+                        background-position: -40px ${prpos => prpos.isplaying ? '-165px' : '-204px'};
                     }
                 }
                 .btns-next {
