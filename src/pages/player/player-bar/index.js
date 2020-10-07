@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { getSongDetailAction } from '../store/actionCreator'
+import { getSongDetailAction, changeSequenceAaction } from '../store/actionCreator'
 import { formatDate } from '@/utils/format-utils'
 
 import { Slider } from 'antd'
@@ -14,6 +14,9 @@ export default memo(function DPlayerBar() {
     const { currentSong } = useSelector(state => ({
         currentSong: state.getIn(['player', 'currentSong'])
     }), shallowEqual)
+    const { sequence } = useSelector(state => ({
+        sequence: state.getIn(['player', 'sequence'])
+    }), shallowEqual)
     const dispatch = useDispatch()
 
     // *react hook
@@ -23,10 +26,15 @@ export default memo(function DPlayerBar() {
     const [sliderIsChange, setSliderIsChange] = useState(false)
     const [isPlaying, setisPlaying] = useState(false)
     useEffect(() => {
-        dispatch(getSongDetailAction(28996919))
+        dispatch(getSongDetailAction())
     }, [dispatch])
     useEffect(() => {
         audioRef.current.src = getPlaySong(currentSong.id)
+        audioRef.current.play().then(res => {
+            setisPlaying(true);
+        }).catch(err => {
+            setisPlaying(false);
+        });
     }, [currentSong])
 
 
@@ -65,16 +73,28 @@ export default memo(function DPlayerBar() {
             playSong();
         }
     }, [duration, isPlaying, playSong])
+    const changeSong = (num) => {
+        dispatch(getSongDetailAction(num))
+    }
+    const changeLoop = () => {
+        let tag = sequence + 1;
+        if (tag > 2) tag = 0
+        dispatch(changeSequenceAaction(tag))
+    }
     return (
-        <DPlayerBarWrapper isplaying={isPlaying} >
+        <DPlayerBarWrapper isplaying={isPlaying} sequence={sequence}>
             <div className='player-bar-main sprite_player-bar'>
                 <div className='player-bar-content'>
                     <div className='content-btns'>
-                        <div className='btns-pre sprite_player-bar btns-total'></div>
+                        <div className='btns-pre sprite_player-bar btns-total'
+                            onClick={e => { changeSong(-1) }}
+                        ></div>
                         <div className='btns-middle sprite_player-bar btns-total'
                             onClick={e => { playSong() }}>
                         </div>
-                        <div className='btns-next sprite_player-bar btns-total'></div>
+                        <div className='btns-next sprite_player-bar btns-total'
+                            onClick={e => { changeSong(1) }}
+                        ></div>
                     </div>
                     <NavLink to='/discover/player'>
                         <img src={img} alt='' className='content-head'></img>
@@ -106,7 +126,9 @@ export default memo(function DPlayerBar() {
                     </div>
                     <div className='content-contral'>
                         <a href="javacript" className='ctrl-volume ctrl-btns sprite_player-bar'> </a>
-                        <a href="javacript" className='ctrl-loop ctrl-btns sprite_player-bar'> </a>
+                        <div href="javacript" className='ctrl-loop ctrl-btns sprite_player-bar'
+                            onClick={e => { changeLoop() }}>
+                        </div>
                         <a href="javacript" className='ctrl-list ctrl-btns sprite_player-bar'> </a>
                     </div>
                 </div>

@@ -1,10 +1,18 @@
 import React, { memo } from 'react'
+import { useDispatch } from 'react-redux'
+
 import { changeImgSize } from '@/utils/format-utils'
+import { changeAboutPlayAction } from '@/pages/player/store'
 
 import { DTopRankingWrapper } from './style'
 export default memo(function DTopRanking(props) {
     const { info } = props;
     const { tracks = [] } = props.info;
+
+    const dispatch = useDispatch()
+    const changeSong = (ids) => {
+        dispatch(changeAboutPlayAction(ids))
+    }
     return (
         <DTopRankingWrapper>
             <div className='content' >
@@ -31,7 +39,11 @@ export default memo(function DTopRanking(props) {
                                     <div className='number'>{index + 1}</div>
                                     <div className='li-right'>
                                         <a href="#/discober/ranking" className='text'>{item.name}</a>
-                                        <a href="#/discober/ranking" className='li-play btn sprite_02'>  </a>
+                                        <div
+                                            href="#/discober/ranking"
+                                            className='li-play btn sprite_02'
+                                            onClick={e => { changeSong(item.id) }}
+                                        >  </div>
                                         <a href="#/discober/ranking" className='li-add btn sprite_icon2'>  </a>
                                         <a href="#/discober/ranking" className='li-coll btn sprite_02'>  </a>
                                     </div>

@@ -105,6 +105,7 @@ export const DTopRankingWrapper = styled.div`
                     .li-play {
                         background-position: -267px -268px;
                         &:hover {
+                            cursor: pointer;
                             background-position: -267px -288px;
                         } 
                     }

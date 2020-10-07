@@ -179,7 +179,33 @@ export const DPlayerBarWrapper = styled.div`
                     background-position: -2px -248px;
                 }
                 .ctrl-loop {
-                    background-position: -66px -344px;
+                    background-position: ${props => {
+                        switch (props.sequence) {
+                            case 0:
+                                return '-66px -344px'
+                            case 1:
+                                return '-3px -344px'
+                            case 2:
+                                return '-66px -248px'
+                            default:
+                                break;
+                        }
+                    }}
+                }
+                .ctrl-loop:hover {
+                    cursor: pointer;
+                    background-position: ${props => {
+                        switch (props.sequence) {
+                            case 0:
+                                return '-93px -344px'
+                            case 1:
+                                return '-33px -344px'
+                            case 2:
+                                return '-93px -248px'
+                            default:
+                                break;
+                        }
+                    }}
                 }
                 .ctrl-list {
                     background-position: -42px -68px;
