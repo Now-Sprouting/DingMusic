@@ -1,3 +1,5 @@
 export function getRandomNumber(num) {
-    return Math.floor(Math.random() * num);
+    const random = Math.random()
+    const result = Math.floor(random * num)
+    return result;
 }

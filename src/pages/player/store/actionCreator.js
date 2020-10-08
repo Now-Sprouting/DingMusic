@@ -26,16 +26,16 @@ export const getSongDetailAction = (num) => {
         const sequence = getState().getIn(['player', 'sequence'])
         if (num === 1 || num === -1) {
             // 顺序播放下一首
-            if (sequence === 0 || sequence === 2) {
+            if (sequence === 0 || sequence === 1) {
                 currentIndex = currentIndex + num
                 if (currentIndex === (playList.length)) currentIndex = 0;
                 if (currentIndex === -1) currentIndex = playList.length - 1;
             } else {
                 // 随机播放
-                let index = getRandomNumber(playList.length - 1)
-                // while (currentIndex === index) {
-                //     index = getRandomNumber(playList.length - 1)
-                // }
+                let index = getRandomNumber(playList.length)
+                while (currentIndex === index) {
+                    index = getRandomNumber(playList.length)
+                }
                 currentIndex = index;
             }
         }
@@ -52,7 +52,7 @@ export const changeAboutPlayAction = (ids) => {
             return ids === item.id;
         })
         if (index !== -1) {
-
+            return
         } else {
             getSongDetail(ids).then(res => {
                 const currentSong = res.songs[0];

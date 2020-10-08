@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { getSongDetailAction, changeSequenceAaction } from '../store/actionCreator'
+import { getSongDetailAction, changeSequenceAaction, changeSonDetialAction } from '../store/actionCreator'
 import { formatDate } from '@/utils/format-utils'
 
 import { Slider } from 'antd'
@@ -81,6 +81,14 @@ export default memo(function DPlayerBar() {
         if (tag > 2) tag = 0
         dispatch(changeSequenceAaction(tag))
     }
+    const timeEnd = () => {
+        if (sequence === 0) {
+            const newSong = {...currentSong}
+            dispatch(changeSonDetialAction(newSong))
+        }else {
+            dispatch(getSongDetailAction(1))
+        }
+    }
     return (
         <DPlayerBarWrapper isplaying={isPlaying} sequence={sequence}>
             <div className='player-bar-main sprite_player-bar'>
@@ -135,6 +143,7 @@ export default memo(function DPlayerBar() {
             </div>
             <audio ref={audioRef}
                 onTimeUpdate={e => timeUpdate(e)}
+                onEnded={e => timeEnd(e)}
             />
         </DPlayerBarWrapper>
     )
