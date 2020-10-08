@@ -121,6 +121,7 @@ export const DPlayerBarWrapper = styled.div`
                                 height: 27px;
                                 bottom: -11px;
                                 border: 0;
+                                box-shadow: none;
                                 background: url(${require('@/assets/img/sprite_icon.png')}) no-repeat 0 -250px;
                             }
                         }
@@ -165,6 +166,7 @@ export const DPlayerBarWrapper = styled.div`
                 }
             }
             .content-contral {
+                position: relative;
                 display: flex;
                 align-items: center;
                 width: 126px;
@@ -177,6 +179,10 @@ export const DPlayerBarWrapper = styled.div`
                 }
                 .ctrl-volume {
                     background-position: -2px -248px;
+                    &:hover {
+                        cursor: pointer;
+                        background-position: -31px -248px;
+                    }
                 }
                 .ctrl-loop {
                     background-position: ${props => {
@@ -208,9 +214,83 @@ export const DPlayerBarWrapper = styled.div`
                     }}
                 }
                 .ctrl-list {
+                    width: 59px;
+                    height: 25px;
+                    line-height: 26px;
+                    text-indent: 30px;
+                    color: #ccc;
                     background-position: -42px -68px;
+                    &:hover {
+                        cursor: pointer;
+                        background-position: -42px -98px;
+                    } 
+                }
+                .loopTipBar {
+                    display: ${props => props.loopIsVis ? 'block' : 'none' };
+                    position: absolute;
+                    top: -40px;
+                    left: 0px;
+                    width: 81px;
+                    height: 39px;
+                    line-height: 34px;
+                    z-index: 3;
+                    text-align: center;
+                    color: #fff;
+                    background-position: 0 -457px;
+                }
+                .change-volume-bar {
+                    display: ${props => props.volumeBarIsVis ? 'block' : 'none'};
+                    position: absolute;
+                    width: 32px;
+                    height: 113px;
+                    top: -118px;
+                    left: 0px;
+                    z-index: 2; 
+                    background-position: 0 -503px;
+                    .ant-slider-vertical {
+                        position: relative;
+                        top: 18px;
+                        left:14px;
+                        margin: 0;
+                        padding: 0;
+                        height: 85px!important;
+                        .ant-slider-rail {
+                            background-color: transparent;
+                        }
+                        .ant-slider-track {
+                            background: url(${require('@/assets/img/playbar_sprite.png')});
+                            background-position: -40px bottom;
+                        }
+                        .ant-slider-handle {
+                            position: absolute;
+                            left: -2px;
+                            width: 18px;
+                            height: 20px;
+                            border: 0;
+                            box-shadow: none;
+                            background: url(${require('@/assets/img/sprite_icon.png')});
+                            background-position:-40px -250px
+                            
+                        }
+                    }
                 }
             }
         }
+    }
+    .lyricTip {
+        display: ${props => props.lyricTipIsVis ? 'block' : 'none'};
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 30px;
+        font-size: 16px;
+        transform: translateX(-50%);
+        padding: 0 10px;
+        color: #e8e8e8;
+        opacity: 0.9;
+        background-color: black;
+        box-shadow: 0 0 2px 2px #666;
     }
 `

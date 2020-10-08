@@ -39,9 +39,3 @@ export function formatDate(time, fmt) {
 function padLeftZero(str) {
     return ('00' + str).substr(str.length);
 };
-
-
-// *获取音乐流
-export function getPlaySong(id) {
-    return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
-}

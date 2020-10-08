@@ -1,6 +1,7 @@
 import * as actionTypes from './constants'
-import { getSongDetail } from '@/services/player'
+import { getSongDetail, getLyric } from '@/services/player'
 import { getRandomNumber } from '@/utils/math-utils'
+import { parseLyric } from '@/utils/parse-lyric'
 
 
 export const changeSonDetialAction = (currentSong) => ({
@@ -18,6 +19,10 @@ export const changeCurrentSongIndexAction = (currentSongIndex) => ({
 export const changeSequenceAaction = (sequence) => ({
     type: actionTypes.CHANGE_SEQUENCE,
     sequence
+})
+export const changeLyricAction = (lyricList) => ({
+    type: actionTypes.CHANGE_LYRIC,
+    lyricList
 })
 export const getSongDetailAction = (num) => {
     return (dispatch, getState) => {
@@ -40,6 +45,7 @@ export const getSongDetailAction = (num) => {
             }
         }
         const currentSongs = playList[currentIndex]
+        dispatch(getLyricAction(currentSongs.id))
         dispatch(changeCurrentSongIndexAction(currentIndex))
         dispatch(changeSonDetialAction(currentSongs))
     }
@@ -58,10 +64,21 @@ export const changeAboutPlayAction = (ids) => {
                 const currentSong = res.songs[0];
                 const currentPlayList = [...playList]
                 currentPlayList.push(currentSong)
+                dispatch(getLyricAction(currentSong.id))
                 dispatch(changePlayListAction(currentPlayList));
                 dispatch(changeSonDetialAction(currentSong));
                 dispatch(changeCurrentSongIndexAction(currentPlayList.length - 1))
             })
         }
+    }
+}
+
+export const getLyricAction = (id) => {
+    return dispatch => {
+        getLyric(id).then(res => {
+            const lyricListString = res.lrc.lyric;
+            const lyricList = parseLyric(lyricListString)
+            dispatch(changeLyricAction(lyricList))
+        })
     }
 }

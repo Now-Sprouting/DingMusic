@@ -6,7 +6,8 @@ import { formatDate } from '@/utils/format-utils'
 
 import { Slider } from 'antd'
 import { DPlayerBarWrapper } from './style'
-import { changeImgSize, getPlaySong } from '../../../utils/format-utils'
+import { changeImgSize } from '../../../utils/format-utils'
+import { getPlaySong } from '@/services/player'
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default memo(function DPlayerBar() {
@@ -17,6 +18,12 @@ export default memo(function DPlayerBar() {
     const { sequence } = useSelector(state => ({
         sequence: state.getIn(['player', 'sequence'])
     }), shallowEqual)
+    const { lyricList } = useSelector(state => ({
+        lyricList: state.getIn(['player', 'lyricList'])
+    }))
+    const {playList} = useSelector(state => ({
+        playList: state.getIn(['player', 'playList'])
+    }))
     const dispatch = useDispatch()
 
     // *react hook
@@ -25,6 +32,10 @@ export default memo(function DPlayerBar() {
     const [progress, setProgress] = useState(0)
     const [sliderIsChange, setSliderIsChange] = useState(false)
     const [isPlaying, setisPlaying] = useState(false)
+    const [loopIsVis, setloopIsVis] = useState(false)
+    const [lyricTipIsVis, setlyricTipIsVis] = useState(false)
+    const [lyricContent, setlyricContent] = useState('')
+    const [volumeBarIsVis, setvolumeBarIsVis] = useState(false)
     useEffect(() => {
         dispatch(getSongDetailAction())
     }, [dispatch])
@@ -52,6 +63,15 @@ export default memo(function DPlayerBar() {
     }, [isPlaying])
     const timeUpdate = (e) => {
         const currentTime = e.target.currentTime;
+        // 歌词逻辑
+        const newLyricList = lyricList.filter((item) => {
+            return item.time < currentTime * 1000;
+        })
+        if (newLyricList.length > 0) {
+            const index = newLyricList.length - 1;
+            newLyricList[index].content === '' ? setlyricTipIsVis(false) : setlyricTipIsVis(true);
+            setlyricContent(newLyricList[index].content)
+        }
         if (!sliderIsChange) {
             setCurrentTime(currentTime * 1000);
             setProgress(currentTime * 1000 / duration * 100);
@@ -77,20 +97,36 @@ export default memo(function DPlayerBar() {
         dispatch(getSongDetailAction(num))
     }
     const changeLoop = () => {
+        setloopIsVis(true)
+        setTimeout(() => {
+            setloopIsVis(false)
+        }, 3000);
         let tag = sequence + 1;
         if (tag > 2) tag = 0
         dispatch(changeSequenceAaction(tag))
     }
     const timeEnd = () => {
         if (sequence === 0) {
-            const newSong = {...currentSong}
+            const newSong = { ...currentSong }
             dispatch(changeSonDetialAction(newSong))
-        }else {
+        } else {
             dispatch(getSongDetailAction(1))
         }
     }
+    const changeVolume = () => {
+        setvolumeBarIsVis(!volumeBarIsVis)
+    }
+    const changeVolumeBar = (value) => {
+        audioRef.current.volume = value / 100;
+    }
     return (
-        <DPlayerBarWrapper isplaying={isPlaying} sequence={sequence}>
+        <DPlayerBarWrapper
+            isplaying={isPlaying}
+            sequence={sequence}
+            loopIsVis={loopIsVis}
+            lyricTipIsVis={lyricTipIsVis}
+            volumeBarIsVis={volumeBarIsVis}
+            >
             <div className='player-bar-main sprite_player-bar'>
                 <div className='player-bar-content'>
                     <div className='content-btns'>
@@ -133,13 +169,34 @@ export default memo(function DPlayerBar() {
                         <a href="javacript" className='oper-share oper-btns sprite_player-bar'> </a>
                     </div>
                     <div className='content-contral'>
-                        <a href="javacript" className='ctrl-volume ctrl-btns sprite_player-bar'> </a>
+                        <div href="javacript" className='ctrl-volume ctrl-btns sprite_player-bar'
+                            onClick={e => { changeVolume() }}
+                        ></div>
                         <div href="javacript" className='ctrl-loop ctrl-btns sprite_player-bar'
                             onClick={e => { changeLoop() }}>
                         </div>
-                        <a href="javacript" className='ctrl-list ctrl-btns sprite_player-bar'> </a>
+                        <div href="javacript" className='ctrl-list ctrl-btns sprite_player-bar'>
+                            {playList.length}
+                        </div>
+                        {/* 不确定显示元素 */}
+                        <div className='loopTipBar sprite_player-bar'>
+                            {
+                                sequence === 0 ? '单曲循环' : sequence === 1 ? '列表循环' : '随机播放'
+                            }
+                        </div>
+                        <div className='change-volume-bar sprite_player-bar'>
+                            <Slider 
+                            vertical 
+                            defaultValue={100} 
+                            onChange={e => {changeVolumeBar(e)}}/>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div className='lyricTip'>
+                {
+                    lyricContent
+                }
             </div>
             <audio ref={audioRef}
                 onTimeUpdate={e => timeUpdate(e)}
