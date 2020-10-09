@@ -1,5 +1,5 @@
 // *第三方库
-import React, { memo } from 'react'
+import React, { memo, Suspense } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
@@ -17,7 +17,9 @@ export default memo(function App() {
             <HashRouter>
                 <div>
                     <DAppHeader />
-                    {renderRoutes(routes)}
+                    <Suspense fallback={<div>page loading</div>}>
+                        {renderRoutes(routes)}
+                    </Suspense>
                     <DAppFooter />
                     <DPlayerBar />
                 </div>
