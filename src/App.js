@@ -17,7 +17,7 @@ export default memo(function App() {
             <HashRouter>
                 <div>
                     <DAppHeader />
-                    <Suspense fallback={<div>page loading</div>}>
+                    <Suspense fallback={<h1>page loading</h1>}>
                         {renderRoutes(routes)}
                     </Suspense>
                     <DAppFooter />
