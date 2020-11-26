@@ -9,6 +9,7 @@ import store from '@/store'
 // *组件的引入
 import DAppHeader from '@/components/app-header'
 import DAppFooter from '@/components/app-footer'
+import Loading from '@/components/loading'
 import DPlayerBar from '@/pages/player/player-bar'
 
 export default memo(function App() {
@@ -17,7 +18,7 @@ export default memo(function App() {
             <HashRouter>
                 <div>
                     <DAppHeader />
-                    <Suspense fallback={<h1>page loading</h1>}>
+                    <Suspense fallback={<Loading></Loading>}>
                         {renderRoutes(routes)}
                     </Suspense>
                     <DAppFooter />
